@@ -14,6 +14,9 @@
 #   v1.0 31/08/2021, Otávio Souza:
 #       - Code formatting
 #
+#   v1.1 31/08/2021, Otávio Souza:
+#       - Adding shellcheck directive
+#
 # ------------------------------------------
 # Tested on:
 #   bash 5.1.0
@@ -27,7 +30,8 @@ UNTIL=100
 
 for i in $(seq $START $UNTIL)
 do
-    for j in $(seq $i $UNTIL)
+    # shellcheck disable=SC2034  # Unused variables left for readability
+    for j in $(seq "$i" $UNTIL)
     do
         printf "*"
     done

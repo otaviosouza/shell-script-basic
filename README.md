@@ -10,9 +10,13 @@ _Language:_ Shell Script
 
 ## History
 
+- 2021-09-01, Otávio Souza
+  - Closes flags - 03_flags.
+
 - 2021-08-31, Otávio Souza
-  - Closes intro module
+  - Closes intro module - 01_intro.
+  - Closes good habits - 02_good_habits.
 
 - 2021-08-30, Otávio Souza
-  - Initial commit.
   - Creating local repository.
+  - Initial commit.
