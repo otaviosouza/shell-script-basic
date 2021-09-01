@@ -10,6 +10,9 @@ _Language:_ Shell Script
 
 ## History
 
+- 2021-08-31, Otávio Souza
+  - Closes intro module
+
 - 2021-08-30, Otávio Souza
   - Initial commit.
   - Creating local repository.
