@@ -11,7 +11,7 @@ _Language:_ Shell Script
 ## History
 
 - 2021-09-04, Otávio Souza
-  - Closes debugging - 04_debug.
+  - Closes - 04_debug ; 05_ctrl-char ; 06_regex.
 
 - 2021-09-01, Otávio Souza
   - Closes flags - 03_flags.
