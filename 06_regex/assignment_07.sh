@@ -17,6 +17,10 @@
 #   v1.1 04/09/2021, Otávio Souza:
 #       - Testing flags
 #       - Release
+#   v1.2 04/09/2021, Otávio Souza:
+#       - Including missing condition:
+#           Groups starting on 'r' and finishing on 't'.
+#       - Script refactoring
 # ------------------------------------------
 # Tested on:
 #   bash 5.1.0
@@ -41,36 +45,41 @@ SHORT_HELP="
          is 'd' or 'u'
      6 - Groups within 2 to 4 digits in size on name
      7 - Groups starting on 'r' or 's'
+     8 - Groups starting on 'r' and finishing on 't'
 "
-VERSION="v1.1"
+VERSION="v1.2"
 
-FILTER="[1-7]"
+FILTER="[1-8]"
 
-RED="\033[31m" # red purple
+RED="\033[31m" # red
 NC="\033[0m"
 ERROR="${RED}Something went wrong.${NC} Please check -h for help."
+
+OUTPUT=""
 
 while test -n "$1"
 do
     case "$1" in
-        -h) echo "$SHORT_HELP" && exit 0    ;;
-        -v) echo "$VERSION" && exit 0       ;;
+        -h) OUTPUT="${SHORT_HELP}";;
+        -v) OUTPUT="${VERSION}";;
         *)  if ! [[ $1 =~ $FILTER ]]; then
-                echo -e "$ERROR" && exit 1
+                echo -e "${ERROR}" && exit 1
             else
                 FILTER="$1"
+                case "$FILTER" in
+                    1) OUTPUT=$(echo "$GRPS" | grep "^r") ;;
+                    2) OUTPUT=$(echo "$GRPS" | grep "t$") ;;
+                    3) OUTPUT=$(echo "$GRPS" | grep -E "[de]$");;
+                    4) OUTPUT=$(echo "$GRPS" | grep -E "[^de]$");;
+                    5) OUTPUT=$(echo "$GRPS" | grep -E "^.[du]");;
+                    6) OUTPUT=$(echo "$GRPS" | grep -E "^.{2,4}$");;
+                    7) OUTPUT=$(echo "$GRPS" | grep -E "^r|^s");;
+                    8) OUTPUT=$(echo "$GRPS" | grep -E "^r.*t$");;
+                    *) OUTPUT="$GRPS";;
+                esac
             fi
     esac
     shift
 done
 
-case "$FILTER" in
-    1) GRPS=$(echo "$GRPS" | grep "^r") && echo "$GRPS" && exit 0;;
-    2) GRPS=$(echo "$GRPS" | grep "t$") && echo "$GRPS" && exit 0;;
-    3) GRPS=$(echo "$GRPS" | grep -E "d$|e$") && echo "$GRPS" && exit 0;;
-    4) GRPS=$(echo "$GRPS" | grep -E "[^ d|e]$") && echo "$GRPS" && exit 0;;
-    5) GRPS=$(echo "$GRPS" | grep -E "^.d+|^.u+") && echo "$GRPS" && exit 0;;
-    6) GRPS=$(echo "$GRPS" | grep -E "^.{2,4}$") && echo "$GRPS" && exit 0;;
-    7) GRPS=$(echo "$GRPS" | grep -E "^r|^s") && echo "$GRPS" && exit 0;;
-    *)  echo "$GRPS" && exit 0;;
-esac
+echo "$OUTPUT" && exit 0
