@@ -1,32 +1,31 @@
 #!/usr/bin/env bash
 #
-# scriptName.sh - short description
+# users.sh - System to manage users
 #
 # Author:       Souza, Otávio
 # Maintainer:   Souza, Otávio
 # GitHub:       https://github.com/otaviosouza
 #
 # -----------------------------------------------------------
-# More detailed description about the script,
-# including way to use.
+# This script do all user management functions as create,
+# delete and update.
 #
 # Example:
-#   $ ./scriptName.sh -d 1
-#   In this example the script will run in
-#   debug mode level 1.
+#   $ source users.sh
+#   $ UserList
 #
+# This script uses ShellCheck - https://github.com/koalaman/shellcheck
 # -----------------------------------------------------------
 # Changelog:
-#   v1.0 dd/mm/yyyy, Author:
-#       - What has changed?
-#       - Why changed?
+#   v1.0 05/09/2021, Otávio Souza:
+#       - Error handling
 #
 # -----------------------------------------------------------
 # Tested on:
 #   bash 5.1.0
 # -----------------------------------------------------------
 # Thanks:
-#   Eric Idle - Found a bug in login.
-#   Graham Chapman - Suggested to add the -h.
+#   Mateus Müller (https://bit.ly/3BYPyiT) - For dedicating
+#   your personal time to this course.
 #
 # -----------------------------------------------------------

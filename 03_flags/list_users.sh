@@ -5,7 +5,7 @@
 # Author:       Otávio Souza
 #
 # -----------------------------------------------
-# Script about flags on Matthew Muller's Course
+# Script about flags on Mateus Muller's Course
 # It will extract the users from /etc/passwd.
 # The user can sort alphabetically, or capitalize.
 #
