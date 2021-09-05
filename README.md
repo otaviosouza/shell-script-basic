@@ -11,20 +11,19 @@ _Language:_ Shell Script
 ## Changelog
 
 - 2021-09-05, Otávio Souza
-  - (begin) Database module - 09_database.
+  - Finish - 09_database.
 
 - 2021-09-04, Otávio Souza
-  - Closes - 04_debug ; 05_ctrl-char ; 06_regex.
-  - Closes internet data extraction - 07_data+extract.
-  - Closes setting files and generic parser - 08_setting+files
+  - Finish
+    - 04_debug ; 05_ctrl-char ; 06_regex.
+    - 07_data+extract.
+    - 08_setting+files.
 
 - 2021-09-01, Otávio Souza
-  - Closes flags - 03_flags.
+  - Finish - 03_flags.
 
 - 2021-08-31, Otávio Souza
-  - Closes intro module - 01_intro.
-  - Closes good habits - 02_good_habits.
+  - Finish - 01_intro; 02_good_habits.
 
 - 2021-08-30, Otávio Souza
-  - Creating local repository.
   - Initial commit.

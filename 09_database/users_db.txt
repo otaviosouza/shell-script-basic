@@ -1,11 +1,5 @@
-# Users database
-
-2:Eric:idle@monty.python
 1:Graham:chapman@monty.python
-
+2:Eric:idle@monty.python
 3:John:cleese@monty.python
 4:Terry:gilliam@monty.python
-
-6:Terry:jones@monty.python
-
 5:Michael:palin@monty.python

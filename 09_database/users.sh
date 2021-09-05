@@ -19,7 +19,8 @@
 # Changelog:
 #   v1.0 05/09/2021, Otávio Souza:
 #       - Error handling
-#       - ListUsers function
+#       - List users on database
+#       - Implement CRUD for user
 #
 # -----------------------------------------------------------
 # Tested on:
@@ -32,6 +33,9 @@
 # -----------------------------------------------------------
 
 DB_FILE="users_db.txt"
+TEMP=temp.$$
+
+SEP=":"
 
 RED="\033[1;31m"
 GREEN="\033[32m"
@@ -45,9 +49,9 @@ ShowUser(){
     local id
     local name
     local email
-    id="$(echo "$1" | cut -d : -f 1)"
-    name="$(echo "$1" | cut -d : -f 2)"
-    email="$(echo "$1" | cut -d : -f 3)"
+    id="$(echo "$1" | cut -d $SEP -f 1)"
+    name="$(echo "$1" | cut -d $SEP -f 2)"
+    email="$(echo "$1" | cut -d $SEP -f 3)"
 
     echo -e "${GREEN}ID: ${RED}$id${NC}"
     echo -e "${GREEN}Name: ${RED}$name${NC}"
@@ -61,4 +65,36 @@ ListUsers(){
         [ ! "$line" ] && continue
         ShowUser "$line"
     done < "$DB_FILE"
+}
+
+ValidateUser(){
+    grep -i -q "$1$SEP" "$DB_FILE" # -i : ignore case -q : quiet
+}
+
+CreateUser(){
+    local name
+    name="$(echo "$1" | cut -d $SEP -f 2)"
+
+    if ValidateUser "$name"; then
+        echo -e "${RED}ERROR. User $name already exists.${NC}"
+    else
+        echo "$*" >> "$DB_FILE"
+        echo -e "${GREEN}User $name created with success.${NC}"
+    fi
+    SortUsers
+}
+
+DeleteUser(){
+    ValidateUser "$1" || return
+
+    grep -i -v "$1$SEP" "$DB_FILE" > "$TEMP"
+    mv "$TEMP" "$DB_FILE"
+
+    echo -e "${GREEN}User deleted with success.${NC}"
+    SortUsers
+}
+
+SortUsers(){
+    sort "$DB_FILE" > "$TEMP"
+    mv "$TEMP" "$DB_FILE"
 }
