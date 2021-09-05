@@ -1,4 +1,4 @@
 # 0 = disabled; 1 = enabled
 COLORFUL=1
 
-CAPITAL=0
+CAPITAL=1

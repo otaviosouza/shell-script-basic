@@ -34,7 +34,7 @@ NC="\033[0m"
 
 
 # is settings readable?
-[ ! -r "$CONF_FILE" ] && echo -e "${RED}No read access to settings.cf.${NC}" && exit 1
+[ ! -r "$CONF_FILE" ] && echo -e "${RED}Read permission denied.${NC}" && exit 1
 
 # functions
 SetParam(){
