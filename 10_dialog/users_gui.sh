@@ -59,39 +59,6 @@ ListUsers(){
     rm -f "$TEMP"
 }
 
-CreateUser(){
-    local last_id
-    local new_id
-    local name
-    local email
-    last_id=$(grep -Ev "^#|^$" $DB_FILE | sort -h | tail -n 1 | cut -d $SEP -f 1)
-    new_id=$((last_id+1))
-    name=$(dialog --title "Create user" --stdout --inputbox "User name" 0 0)
-    ValidateUser "$name" && {
-        dialog --title "ERROR" --msgbox "User $name already exists." 6 40
-        exit 1
-    }
-    email=$(dialog --title "Create user" --stdout --inputbox "User e-mail" 0 0)
-
-    echo "$new_id$SEP$name$SEP$email" >> "$DB_FILE"
-    dialog --title "SUCCESS!" --msgbox "User $name created with success." 10 40
-    ListUsers
-}
-
-DeleteUser(){
-    local users
-    local id_del
-    users=$(grep -Ev "^#|^$" "$DB_FILE" | sort -h | cut -d $SEP -f 1,2 | sed 's/:/ "/;s/$/"/')
-    
-    # shellcheck disable=SC2086  # Variable cannot be quoted to be expanded
-    id_del=$(eval dialog --stdout --menu \"Choose the user to be removed\" 0 0 0 $users)
-
-    grep -iv "^$id_del$SEP" "$DB_FILE" > "$TEMP"
-    mv "$TEMP" "$DB_FILE"
-    dialog --title "SUCCESS!" --msgbox "User removed with success." 10 40
-    ListUsers
-}
-
 SortUsers(){
     sort "$DB_FILE" > "$TEMP"
     mv "$TEMP" "$DB_FILE"
@@ -111,7 +78,33 @@ do
 
     case $action in
         List) ListUsers     ;;
-        Remove) DeleteUser  ;;
-        Create) CreateUser  ;;
+        Remove)
+            users=$(grep -Ev "^#|^$" "$DB_FILE" | sort -h | cut -d $SEP -f 1,2 | sed 's/:/ "/;s/$/"/')
+        
+            # shellcheck disable=SC2086  # Variable cannot be quoted to be expanded
+            id_del=$(eval dialog --stdout --menu \"Choose the user to be removed\" 0 0 0 $users)
+            [ ! "$id_del" ] && continue
+
+            grep -iv "^$id_del$SEP" "$DB_FILE" > "$TEMP"
+            mv "$TEMP" "$DB_FILE"
+            dialog --title "SUCCESS!" --msgbox "User removed with success." 10 40
+            ListUsers
+        ;;
+        Create)
+            last_id=$(grep -Ev "^#|^$" $DB_FILE | sort -h | tail -n 1 | cut -d $SEP -f 1)
+            new_id=$((last_id+1))
+            name=$(dialog --title "Create user" --stdout --inputbox "User name" 0 0)
+            [ ! "$name" ] && continue
+            ValidateUser "$name" && {
+                dialog --title "ERROR" --msgbox "User $name already exists." 6 40
+                continue
+            }
+            email=$(dialog --title "Create user" --stdout --inputbox "User e-mail" 0 0)
+            [ ! "$email" ] && continue
+
+            echo "$new_id$SEP$name$SEP$email" >> "$DB_FILE"
+            dialog --title "SUCCESS!" --msgbox "User $name created with success." 10 40
+            ListUsers
+        ;;
     esac
 done
