@@ -10,6 +10,10 @@ _Language:_ Shell Script
 
 ## Changelog
 
+- 2021-09-06, Otávio Souza
+  - Close Shell Script course
+  - Finish - 10_dialog.
+
 - 2021-09-05, Otávio Souza
   - Finish - 09_database.
 
